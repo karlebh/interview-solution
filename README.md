@@ -14,3 +14,11 @@ DB_PASSWORD=
 Then run this command
 
 `php artisan migrate --seed`
+
+Admin or the third party credentials.
+
+```
+email: admin@admin.com
+password: password
+```
+After seeding, the user with the above credential will be able to manage other users customers.
