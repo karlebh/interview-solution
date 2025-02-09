@@ -9,10 +9,11 @@ return new class extends Migration {
     {
         Schema::create('customers', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('user_id')->references('id')->on('users');
             $table->string('name');
             $table->string('email')->unique();
-            $table->string('phone_number')->nullable();
-            $table->string('cv_filepath')->nullable();
+            $table->string('phone_number');
+            $table->string('cv_file')->nullable();
             $table->timestamps();
         });
     }
