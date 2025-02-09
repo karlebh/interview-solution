@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Enums\RoleEnum;
 use App\Models\Customer;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
@@ -21,7 +22,7 @@ class CustomerController extends Controller
         $customer = Customer::find($id);
 
         if (! $customer) {
-            return response()->json(['message' => "Could not retrieve customer with id: $id"], 400);
+            return response()->json(['message' => "Could not retrieve customer with id: $id"], 404);
         }
 
         return response()->json([
@@ -46,7 +47,6 @@ class CustomerController extends Controller
             $fileName = time() . '.' . $cv->extension();
             $cv->storeAs('cv_uploads', $fileName, 'public');
 
-            $requestData =  Arr::except($requestData, ['cv_file']);
             $requestData = array_merge($requestData, ['cv_file' => $fileName]);
         }
 
@@ -89,7 +89,6 @@ class CustomerController extends Controller
             $fileName = time() . '.' . $cv->extension();
             $cv->storeAs('cv_uploads', $fileName, 'public');
 
-            $requestData =  Arr::except($requestData, ['cv_file']);
             $requestData = array_merge($requestData, ['cv_file' => $fileName]);
 
             //delete previous file
@@ -121,7 +120,7 @@ class CustomerController extends Controller
         $customer = Customer::find($id)->delete();
 
         if (! $customer) {
-            return response()->json(['message' => 'Customer delete failed.'], 500);
+            return response()->json(['message' => 'Customer delete failed.'], 404);
         }
 
         return response()->json(["message" => "Customer with id: {$id} deleted successfully."], 200);
@@ -132,7 +131,7 @@ class CustomerController extends Controller
         $customer = Customer::find($id);
 
         if (! $customer) {
-            return response()->json(['message' => 'Could not find customer.'], 500);
+            return response()->json(['message' => 'Could not find customer.'], 404);
         }
         $filePath = storage_path('app/public/cv_uploads/' . $customer->cv_file);
 

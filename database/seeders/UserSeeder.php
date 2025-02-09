@@ -14,13 +14,14 @@ class UserSeeder extends Seeder
      */
     public function run(): void
     {
-
-        User::factory()->create([
-            'name' => 'admin',
-            'email' => 'admin@admin.com',
-            'role' => RoleEnum::ADMIN,
-            'password' => 'password',
-        ]);
+        if (! User::where('role', RoleEnum::ADMIN->value)) {
+            User::factory()->create([
+                'name' => 'admin',
+                'email' => 'admin@admin.com',
+                'role' => RoleEnum::ADMIN->value,
+                'password' => 'password',
+            ]);
+        }
 
         User::factory()->count(10)->create([
             'password' => 'password',
