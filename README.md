@@ -11,6 +11,6 @@ DB_USERNAME=root
 DB_PASSWORD=
 ```
 
-Then run these commands
+Then run this command
 
 `php artisan migrate --seed`
